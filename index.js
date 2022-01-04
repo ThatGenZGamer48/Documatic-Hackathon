@@ -60,7 +60,7 @@ client.on("interactionCreate", async (interaction) => {
         await command.execute(interaction);
     } catch (error) {
         return interaction.reply({
-            content: "An unexpected error occured.", 
+            content: `An unexpected error occured.\n\`\`\`${error}\`\`\``, 
             ephemeral: true, 
         });
     }
