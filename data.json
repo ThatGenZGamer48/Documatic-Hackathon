@@ -1,0 +1,36 @@
+{
+	"vaccines": {
+		"Oxford-AstraZeneca": {
+			"unique_id": "",
+			"virus_required": "Adenovirus",
+			"type": "VIRAL_VECTOR",
+			"weakening_agent": "",
+			"sellable_price_in_dollars": ""
+		},
+		"Covaxin": {
+			"unique_id": "",
+			"virus_required": "SARS-CoV-2",
+			"type": "INACTIVATED",
+			"weakening_agent": "Beta Propiolactone",
+			"sellable_price_in_dollars": "125"
+		},
+		"Pfizer": {
+			"unique_id": "",
+			"virus_required": "SARS-CoV-2",
+			"type": "mRNA",
+			"weakening_agent": "Modified",
+			"sellable_price_in_dollars": "100"
+		},
+		"Sputnik": {
+			"unique_id": "",
+			"virus_required": "Adenovirus",
+			"type": "VIRAL_VECTOR",
+			"weakening_agent": "Modified",
+			"sellable_price_in_dollars": "130"
+		}
+	},
+	"viruses": {
+		"SARS-CoV-2": "HCoV-19",
+		"Adenovirus": "AZD1222"
+	}
+}
