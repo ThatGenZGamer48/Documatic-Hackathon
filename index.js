@@ -1,4 +1,4 @@
-const { Client, Intents, Collection, Message } = require("discord.js");
+const { Client, Intents, Collection } = require("discord.js");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 const { config } = require("dotenv");
@@ -49,16 +49,18 @@ client.on("ready", () => {
 	console.log("Bot is ready!");
 });
 
-client.on("messageCrseate", async (message) => {
+client.on("messageCreate", async (message) => {
 	if (message.author.bot) return;
 	if (message.channel.type != "GUILD_TEXT") return;
 });
 
 client.on("interactionCreate", async (interaction) => {
 	if (!interaction.isCommand()) return;
+	
+	const { commandName } = interaction;
 
 	try {
-		await client.commands.get(interaction.commandName).execute(interaction);
+		await client.commands.get(commandName).execute(interaction);
 	} catch (error) {
 		console.log(error);
 	}
