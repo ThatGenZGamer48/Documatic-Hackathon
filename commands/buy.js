@@ -1,26 +1,26 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
 const UserDetails = require("../models/UserDetails");
-const data = require("../data.json");
+const shopData = require("../data.json");
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("buy")   
         .setDescription("Buy an item in the shop")
-        .addIntegerOption(option =>
-            option.setName("itemId")
+        .addIntegerOption((option) =>
+            option.setName("itemid")
                 .setDescription("The ID of the item to buy")
                 .setRequired(true)    
         ),
     async execute(interaction) {
         await interaction.deferReply();
 
-        const itemId = interaction.options.getInteger("itemId");
-        const ingredients = data["shop"]["ingredients"];
+        const itemid = interaction.options.getInteger("itemid");
+        const ingredients = shopData["shop"]["ingredients"];
 
-        const ingredientIds = ["1", "2", "3", "4", "5", "6"];
+        const ingredientIds = [1, 2, 3, 4, 5, 6];
 
-        if (!ingredientIds.includes(itemId)) {
+        if (!ingredientIds.includes(itemid)) {
             await interaction.editReply({ content: "Invalid item ID" });
             return;
         }
@@ -33,19 +33,19 @@ module.exports = {
         }
 
         for (const item of ingredients) {
-            if (item["id"] == itemId) {
+            if (ingredients[item]["id"] == itemid) {
                 const userDetail = await UserDetails.findByPk(interaction.user.id);
 
-                const itemName = item["name"];
+                const itemName = ingredients[item]["name"];
 
-                if (userDetail["coins"] < item["coins"]) {
+                if (userDetail["coins"] < ingredients[item]["coins"]) {
                     await interaction.editReply({
                         content: "You do not have enough coins to buy this item!"
                     });
                     return;
                 }
 
-                const updatedCoins = userDetail["coins"] - item["coins"];
+                const updatedCoins = userDetail["coins"] - ingredients[item]["coins"];
 
                 const userItems = userDetail["inventoryItems"];
 
@@ -71,7 +71,7 @@ module.exports = {
                 )
 
                 await interaction.editReply({
-                    content: `You bought the item ${item["name"]} for ${item["coins"]} coins`
+                    content: `You bought the item ${ingredients[item]["name"]} for ${ingredients[item]["coins"]} coins`
                 });
                 return;
             }
