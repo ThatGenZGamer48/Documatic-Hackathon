@@ -1,0 +1,28 @@
+{
+	"vaccines": {
+		"smallpox": {
+			"name": "smallpox",
+			"requiredVirus": "variola",
+			"ingredients": [
+				"smallium",
+				"poxium"
+			]
+		},
+		"influenza": {
+			"name": "influenza",
+			"requiredVirus": "influenza",
+			"ingredients": [
+				"fluzium",
+				"enzium"
+			]
+		},
+		"covid-19": {
+			"name": "covid-19",
+			"requiredVirus": "sars-cov-2",
+			"ingredients": [
+				"corium",
+				"vidium"
+			]
+		}
+	}
+}
