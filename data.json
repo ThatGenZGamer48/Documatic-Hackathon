@@ -2,26 +2,32 @@
     "shop": {
         "ingredients": {
             "Smallium": {
+                "name": "Smallium",
                 "coins": 350,
                 "id": "1"
             },
             "Poxium": {
+                "name": "Poxium",
                 "coins": 450,
                 "id": "2"
             },
             "Fluzium": {
+                "name": "Fluzium",
                 "coins": 800,
                 "id": "3"
             },
             "Enzium": {
+                "name": "Enzium",
                 "coins": 900,
                 "id": "4"
             },
             "Corium": {
+                "name": "Corium",
                 "coins": 1000,
                 "id": "5"
             },
             "Vidium": {
+                "name": "Vidium",
                 "coins": 1100,
                 "id": "6"
             }

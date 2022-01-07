@@ -13,18 +13,18 @@ module.exports = {
 			.setTitle("Shop")
 			.setDescription("The list of items in the shop\n\n")
 			.setColor("BLUE")
-            .setAuthor({
-                name: interaction.user.tag,
-                iconURL: interaction.user.avatarURL({ dynamic: true }),
-            })
-            .setFooter({
-                text: interaction.client.user.tag,
-                iconURL: interaction.client.user.avatarURL(),
-            })
-            .setTimestamp();
+			.setAuthor({
+				name: interaction.user.tag,
+				iconURL: interaction.user.avatarURL({ dynamic: true }),
+			})
+			.setFooter({
+				text: interaction.client.user.tag,
+				iconURL: interaction.client.user.avatarURL(),
+			})
+			.setTimestamp();
 
 		for (const [key, value] of Object.entries(data["shop"]["ingredients"])) {
-			embed.description += `${key} - ${value} coins\n`;
+			embed.description += `**${value["id"]}**. ${key} - ${value["coins"]} coins\n`;
 		}
 
 		await interaction.reply({ embeds: [embed] });
