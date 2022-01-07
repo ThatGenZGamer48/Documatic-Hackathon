@@ -1,14 +1,18 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
 
+// Help command.
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("help")
         .setDescription("The help command."),
     async execute(interaction) {
+        // Create the embed for sending the help command to the user.
         const embed = new MessageEmbed()
             .setTitle("Help")
             .setDescription(
+                // Map all the commands with the command name and the description.
                 interaction.client.commands
                     .map(
                         (cmd) =>
@@ -27,6 +31,7 @@ module.exports = {
             })
             .setTimestamp();
 
+        // Reply the help to the interaction.
         await interaction.reply({ embeds: [embed] });
     },
 };

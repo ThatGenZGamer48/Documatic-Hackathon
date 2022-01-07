@@ -3,6 +3,8 @@ const { MessageEmbed } = require("discord.js");
 const data = require("../data.json");
 const UserDetails = require("../models/UserDetails");
 
+// Project command. To start a project.
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("project")
@@ -11,51 +13,58 @@ module.exports = {
             subcommand
                 .setName("start")
                 .setDescription("Start a new vaccine project.")
-        )
-        .addSubcommand((subcommand) =>
-            subcommand
-                .setName("list")
-                .setDescription("Lists all the current projects of the user.")
         ),
     async execute(interaction) {
+        // Get the sub command.
         const subcommand = interaction.options.getSubcommand();
 
         if (subcommand == "start") {
+
+            // Defer reply as it will take some time to communicate to the database.
             await interaction.deferReply();
 
+            // Get the list of viruses.
             let viruses = [];
 
-            for (const [key, value] of Object.entries(data["viruses"])) {
+            for (const key of data["list_of_viruses"]) {
                 viruses.push(key);
             }
 
+            // Get a random virus
             const randomVirus =
                 viruses[Math.floor(Math.random() * viruses.length)];
 
+            // Find the user with the id.
             const foundResult = await UserDetails.findByPk(interaction.user.id);
 
+            // Get the date twenty minutes before so that the user can redeem immediately instead of waiting for 20 minutes for the first time.
             const currentUTCDate = new Date();
 
-            const twentyMinutesBefore = new Date(
+            const twentyMinutesBefore = Date.UTC(
                 currentUTCDate.getUTCFullYear(),
                 currentUTCDate.getUTCMonth(),
                 currentUTCDate.getUTCDate(),
                 currentUTCDate.getUTCHours(),
                 currentUTCDate.getUTCMinutes() - 21,
                 currentUTCDate.getUTCSeconds()
-            );
+            )
+
+            const finalUTCDate = new Date(twentyMinutesBefore);
 
             if (foundResult == null) {
-                const createUser = await UserDetails.create({
+                // If the user is null, then create a new user. 
+                const createdUser = await UserDetails.create({
                     userId: interaction.user.id,
                     inventoryItems: ["Default"],
                     coins: BigInt(1000),
-                    latestRedeemedTime: twentyMinutesBefore,
+                    latestRedeemedTime: finalUTCDate,
                 });
 
+                // Add the random virus to the user's inventory.
                 const createdUserInventory =
-                    createUser["inventoryItems"].concat(randomVirus);
+                    createdUser["inventoryItems"].concat(randomVirus);
 
+                // Update the user's inventory in the database.
                 await UserDetails.update(
                     { inventoryItems: createdUserInventory },
                     {
@@ -65,12 +74,14 @@ module.exports = {
                     }
                 );
 
-                await createUser.save();
+                await createdUser.save();
             } else {
+                // If the user already exists, check if he already is working on a project. If he is not, then start the project.
                 for (const virus of viruses) {
                     if (
                         foundResult["inventoryItems"].includes("SARS-CoV-2") ||
-                        foundResult["inventoryItems"].includes("Adenovirus")
+                        foundResult["inventoryItems"].includes("Influenza") ||
+                        foundResult["inventoryItems"].includes("Variola")
                     ) {
                         return interaction.editReply({
                             content:
@@ -78,10 +89,10 @@ module.exports = {
                         });
                     }
                 }
-
+                // Add the virus to the user's inventory.
                 newInventory =
                     foundResult["inventoryItems"].concat(randomVirus);
-
+                // Update the user's inventory with the added virus.
                 await UserDetails.update(
                     { inventoryItems: newInventory },
                     {
@@ -90,10 +101,11 @@ module.exports = {
                         },
                     }
                 );
-
+                // Save the updated inventory.
                 await foundResult.save();
             }
 
+            // Send the reply message.
             const embed = new MessageEmbed()
                 .setTitle(
                     "You have been assigned a random virus and 1000 coins..."

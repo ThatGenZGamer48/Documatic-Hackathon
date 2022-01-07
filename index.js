@@ -4,6 +4,9 @@ const { Routes } = require("discord-api-types/v9");
 const { config } = require("dotenv");
 const { readdirSync } = require("fs");
 
+const pg = require('pg');
+pg.types.setTypeParser(1114, (str) => new Date((str.split(' ').join('T'))+'Z'));
+
 // Configuring everything.
 console.clear();
 

@@ -1,36 +1,64 @@
 {
-    "vaccines": {
-        "Oxford-AstraZeneca": {
-            "unique_id": "",
-            "virus_required": "Adenovirus",
-            "type": "VIRAL_VECTOR",
-            "weakening_agent": "",
-            "sellable_price_in_dollars": ""
-        },
-        "Covaxin": {
-            "unique_id": "",
-            "virus_required": "SARS-CoV-2",
-            "type": "INACTIVATED",
-            "weakening_agent": "Beta Propiolactone",
-            "sellable_price_in_dollars": "125"
-        },
-        "Pfizer": {
-            "unique_id": "",
-            "virus_required": "SARS-CoV-2",
-            "type": "mRNA",
-            "weakening_agent": "Modified",
-            "sellable_price_in_dollars": "100"
-        },
-        "Sputnik": {
-            "unique_id": "",
-            "virus_required": "Adenovirus",
-            "type": "VIRAL_VECTOR",
-            "weakening_agent": "Modified",
-            "sellable_price_in_dollars": "130"
+    "shop": {
+        "ingredients": {
+            "Smallium": {
+                "coins": 350,
+                "id": "1"
+            },
+            "Poxium": {
+                "coins": 450,
+                "id": "2"
+            },
+            "Fluzium": {
+                "coins": 800,
+                "id": "3"
+            },
+            "Enzium": {
+                "coins": 900,
+                "id": "4"
+            },
+            "Corium": {
+                "coins": 1000,
+                "id": "5"
+            },
+            "Vidium": {
+                "coins": 1100,
+                "id": "6"
+            }
         }
     },
-    "viruses": {
-        "SARS-CoV-2": "HCoV-19",
-        "Adenovirus": "AZD1222"
-    }
+    "vaccine_data": {
+        "Smallpox Vaccine": {
+            "name": "Smallpox Vaccine",
+            "id": "1",
+            "virus": "Variola",
+            "ingredients": [
+                "Smallium",
+                "Poxium"
+            ]
+        },
+        "Influenza Vaccine": {
+            "name": "Influenza Vaccine",
+            "id": "2",
+            "virus": "Influenza",
+            "ingredients": [
+                "Fluzium",
+                "Enzium"
+            ]
+        },
+        "Coronavirus Vaccine": {
+            "name": "Coronavirus Vaccine",
+            "id": "3",
+            "virus": "SARS-CoV-2",
+            "ingredients": [
+                "Corium",
+                "Vidium"
+            ]
+        }
+    },
+    "list_of_viruses": [
+        "Variola",
+        "Influenza",
+        "SARS-CoV-2"
+    ]
 }
