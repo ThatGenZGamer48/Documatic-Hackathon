@@ -3,32 +3,32 @@
         "ingredients": {
             "Smallium": {
                 "name": "Smallium",
-                "coins": 350,
+                "coins": 950,
                 "id": "1"
             },
             "Poxium": {
                 "name": "Poxium",
-                "coins": 450,
+                "coins": 1200,
                 "id": "2"
             },
             "Fluzium": {
                 "name": "Fluzium",
-                "coins": 800,
+                "coins": 1500,
                 "id": "3"
             },
             "Enzium": {
                 "name": "Enzium",
-                "coins": 900,
+                "coins": 1600,
                 "id": "4"
             },
             "Corium": {
                 "name": "Corium",
-                "coins": 1000,
+                "coins": 1700,
                 "id": "5"
             },
             "Vidium": {
                 "name": "Vidium",
-                "coins": 1100,
+                "coins": 1750,
                 "id": "6"
             }
         }
@@ -41,7 +41,8 @@
             "ingredients": [
                 "Smallium",
                 "Poxium"
-            ]
+            ],
+            "given_coins_when_crafted": 1000
         },
         "Influenza Vaccine": {
             "name": "Influenza Vaccine",
@@ -50,7 +51,8 @@
             "ingredients": [
                 "Fluzium",
                 "Enzium"
-            ]
+            ],
+            "given_coins_when_crafted": 1500
         },
         "Coronavirus Vaccine": {
             "name": "Coronavirus Vaccine",
@@ -59,7 +61,8 @@
             "ingredients": [
                 "Corium",
                 "Vidium"
-            ]
+            ],
+            "given_coins_when_crafted": 2000
         }
     },
     "list_of_viruses": [

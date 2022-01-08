@@ -1,52 +1,128 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
 const UserDetails = require("../models/UserDetails");
-const data = require("../data.json");
+const vaccineData = require("../data.json");
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("craft")
-        .setDescription("Crafts the vaccine for you, if you have the required ingredients")
-        .addStringOption(option =>
-			option
-				.setName("vaccine")
-				.setDescription("The vaccine to craft")
-				.setRequired(true)
-			),
-	async execute(interaction) {
+        .setDescription(
+            "Crafts the vaccine for you, if you have the required ingredients"
+        )
+        .addStringOption((option) =>
+            option
+                .setName("vaccine")
+                .setDescription("The vaccine to craft")
+                .setRequired(true)
+        ),
+    async execute(interaction) {
         await interaction.deferReply();
 
-		const userDetail = await UserDetails.findByPk(interaction.user.id);
-		const vaccine = interaction.options.getString("vaccine");
-		// const ingredients = data['vaccine_data'][vaccine]['ingredients'];
+        const userDetail = await UserDetails.findByPk(interaction.user.id);
+        const vaccine = interaction.options.getString("vaccine");
 
-        // You can index "inventoryItems" (array), "coins": (bigint)
-		const userItems = userDetail["inventoryItems"];
-		const coins = userDetail["coins"];
+        const inventoryItems = userDetail["inventoryItems"];
+        const coins = userDetail["coins"];
 
-        const vaccineToCraft = interaction.options.getString("vaccine");
+        const vaccineData = vaccineData["vaccine_data"];
 
-        let listOfVaccines = [];
+        console.log(vaccineData);
 
-        for (const [key, value] of Object.entries(data["vaccine_data"])) {
-            listOfVaccines.push(value["id"]);
+        let listOfVaccineIds = [];
+
+        for (object in vaccineData) {
+            const value = vaccineData[object];
+
+            listOfVaccineIds.push(value["id"]);
         }
 
-        if (!listOfVaccines.includes(vaccineToCraft)) {
+        console.log(listOfVaccineIds);
+
+        if (!listOfVaccineIds.includes(vaccine)) {
             await interaction.editReply({
-                content: "You have passed an improper vaccine ID."
+                content: "That vaccine doesn't exist!",
             });
             return;
         }
 
-        // for (const [key, value] of Object.entries(data["vaccine_data"])) {
-            
-		// }
+        for (vaccineItem in vaccineData) {
+            const vaccineItemValue = vaccineData[vaccineItem];
 
-        for (const vd of data["vaccine_data"]) {
-            if (data["vaccine_data"][vd]["id"] == vaccineToCraft) {
-                //
+            if (vaccineItemValue["id"] == vaccine) {
+                const vaccineName = vaccineItemValue["name"];
+                const listOfIngredients = vaccineItemValue["ingredients"];
+
+                console.log(listOfIngredients);
+
+                // Have to check
+                if (
+                    !listOfIngredients.every((ingredient) =>
+                        inventoryItems.includes(ingredient)
+                    ) &&
+                    !inventoryItems.includes(vaccineItemValue["virus"])
+                ) {
+                    await interaction.editReply({
+                        content:
+                            "You don't have the required ingredients and the virus!",
+                    });
+                    return;
+                } else if (
+                    !listOfIngredients.every((ingredient) =>
+                        inventoryItems.includes(ingredient)
+                    ) &&
+                    inventoryItems.includes(vaccineItemValue["virus"])
+                ) {
+                    await interaction.editReply({
+                        content:
+                            "You don't have the required ingredients, but you do have the virus!",
+                    });
+                    return;
+                } else if (
+                    !inventoryItems.includes(vaccineItemValue["virus"]) &&
+                    listOfIngredients.every((ingredient) =>
+                        inventoryItems.includes(ingredient)
+                    )
+                ) {
+                    await interaction.editReply({
+                        content:
+                            "You don't have the virus, but you do have the required ingredients!",
+                    });
+                    return;
+                } else {
+                    for (const ing of listOfIngredients) {
+                        const indexOfIng = inventoryItems.indexOf(ing);
+                        inventoryItems.splice(indexOfIng, 1);
+                    }
+
+                    const indexOfVirus = inventoryItems.indexOf(
+                        vaccineItemValue["virus"]
+                    );
+
+                    inventoryItems.splice(indexOfVirus, 1);
+
+                    inventoryItems.push(vaccineName);
+
+                    const updatedCoins =
+                        BigInt(coins) +
+                        BigInt(vaccineItemValue["given_coins_when_crafted"]);
+
+                    await UserDetails.update(
+                        {
+                            coins: updatedCoins,
+                            inventoryItems: inventoryItems,
+                        },
+                        {
+                            where: {
+                                id: interaction.user.id,
+                            },
+                        }
+                    );
+
+                    await interaction.editReply({
+                        content: `You crafted the vaccine ${vaccineName} and got ${vaccineItemValue["given_coins_when_crafted"]}!`,
+                    });
+                }
             }
         }
-	}
-}
+    },
+};
