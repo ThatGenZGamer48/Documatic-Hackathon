@@ -32,7 +32,7 @@ module.exports = {
             return;
         }
 
-        for (const item of ingredients) {
+        for (const item in ingredients) {
             if (ingredients[item]["id"] == itemid) {
                 const userDetail = await UserDetails.findByPk(interaction.user.id);
 

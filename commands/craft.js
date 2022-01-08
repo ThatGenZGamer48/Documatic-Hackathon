@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
 const UserDetails = require("../models/UserDetails");
-const vaccineData = require("../data.json");
+const vcData = require("../data.json");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -19,14 +19,17 @@ module.exports = {
         await interaction.deferReply();
 
         const userDetail = await UserDetails.findByPk(interaction.user.id);
+
+        if (!userDetail) {
+            return interaction.editReply({ content: "You haven't started a project yet! Use the /project start command to start a project!" });
+        }
+
         const vaccine = interaction.options.getString("vaccine");
 
         const inventoryItems = userDetail["inventoryItems"];
         const coins = userDetail["coins"];
 
-        const vaccineData = vaccineData["vaccine_data"];
-
-        console.log(vaccineData);
+        const vaccineData = vcData["vaccine_data"];
 
         let listOfVaccineIds = [];
 
@@ -51,8 +54,6 @@ module.exports = {
             if (vaccineItemValue["id"] == vaccine) {
                 const vaccineName = vaccineItemValue["name"];
                 const listOfIngredients = vaccineItemValue["ingredients"];
-
-                console.log(listOfIngredients);
 
                 // Have to check
                 if (
@@ -113,7 +114,7 @@ module.exports = {
                         },
                         {
                             where: {
-                                id: interaction.user.id,
+                                userId: interaction.user.id,
                             },
                         }
                     );

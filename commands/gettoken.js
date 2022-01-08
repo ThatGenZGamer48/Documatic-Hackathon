@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
 const UserDetails = require("../models/UserDetails");
+const data = require("../data.json");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -12,7 +13,14 @@ module.exports = {
         await interaction.deferReply();
 
         const userDetail = await UserDetails.findByPk(interaction.user.id);
+
+        if (!userDetail) {
+            return interaction.editReply({ content: "You haven't started a project yet! Use the /project start command to start a project!" });
+        }
+
         const inventoryItems = userDetail["inventoryItems"];
+
+        console.log(inventoryItems);
 
         if (
             (!inventoryItems.includes("Smallpox Vaccine") &&
@@ -24,6 +32,31 @@ module.exports = {
             });
             return;
         }
+        
+        for (vaccine in data["vaccine_data"]) {
+            const value = data["vaccine_data"][vaccine];
+
+            indexOfVaccine = inventoryItems.indexOf(value["name"]);
+
+            console.log(indexOfVaccine);
+
+            if (indexOfVaccine > -1) {
+                await inventoryItems.splice(indexOfVaccine, 1);
+                console.log(inventoryItems[indexOfVaccine]);
+            }
+        }
+
+        await inventoryItems.push("Vaccine Crafter Token");
+
+        console.log(inventoryItems);
+
+        await UserDetails.update({
+            inventoryItems: inventoryItems,
+        }, {
+            where: {
+                userId: interaction.user.id,
+            }
+        });
 
         const embed = new MessageEmbed()
             .setTitle("You have been given a token!")

@@ -69,5 +69,10 @@
         "Variola",
         "Influenza",
         "SARS-CoV-2"
-    ]
+    ],
+    "virus_of_vaccine": {
+        "Coronavirus Vaccine": "SARS-CoV-2",
+        "Smallpox Vaccine": "Variola",
+        "Influenza Vaccine": "Influenza"
+    }
 }
