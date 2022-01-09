@@ -5,14 +5,14 @@ The repository for working on the Hackathon hosted by the Documatic team.
 # Directions of Use
 
 - Open pgAdmin 4 and create a new table in your database named `UserDetails`. Then create 6 tables with the corresponding names and datatypes.
+It has been written in the format `name: datatype`
 
-Name:                 Datatype:
-userId                text
-inventoryItems        text\[]
-coins                 bigint
-latestRedeemedTime    timestamp without time zone
-createdAt             date
-updatedAt             date
+userId: text<br>
+inventoryItems: text\[]<br>
+coins: bigint<br>
+latestRedeemedTime: timestamp without time zone<br>
+createdAt: date<br>
+updatedAt: date<br>
 
 Note: The SQL standard requires that writing just timestamp be equivalent to timestamp without time zone, and PostgreSQL honors that behavior.
 
