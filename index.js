@@ -1,3 +1,22 @@
+/*
+Directions of Use:
+
+1. Change the name of the file .env.example to .env and change the variables name according to your Bot & PostgreSQL details.
+2. Open pgAdmin 4 and create a new table in the database inputted in the .env file (Table Name: UserDetails). Then create 6 columns with the corresponding names and datatypes. It has been written in the format name: datatype
+userId: text
+inventoryItems: text[]
+coins: bigint
+latestRedeemedTime: timestamp without time zone
+createdAt: date
+updatedAt: date
+
+Note: The SQL standard requires that writing just timestamp be equivalent to timestamp without time zone, and PostgreSQL honors that behavior.
+
+This is because the sequelize auto sync does not work and it fails the redeem command.
+
+You're good to go!
+*/
+
 const { Client, Intents, Collection } = require("discord.js");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
@@ -53,11 +72,7 @@ client.on("ready", () => {
     console.log("Bot is ready!");
 });
 
-client.on("messageCreate", async (message) => {
-    if (message.author.bot) return;
-    if (message.channel.type != "GUILD_TEXT") return;
-});
-
+// Interaction create event.
 client.on("interactionCreate", async (interaction) => {
     if (!interaction.isCommand()) return;
 
@@ -70,4 +85,5 @@ client.on("interactionCreate", async (interaction) => {
     }
 });
 
+// Running the bot.
 client.login(token);

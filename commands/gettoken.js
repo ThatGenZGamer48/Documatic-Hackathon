@@ -32,7 +32,7 @@ module.exports = {
         // Check if the user has all the three vaccines.
         if (
             (!inventoryItems.includes("Smallpox Vaccine") &&
-                !inventoryItems.includes("Influenza Vaccine")) ||
+                !inventoryItems.includes("Influenza Vaccine")) &&
             !inventoryItems.includes("Coronavirus Vaccine")
         ) {
             await interaction.editReply({
@@ -47,11 +47,8 @@ module.exports = {
 
             indexOfVaccine = inventoryItems.indexOf(value["name"]);
 
-            console.log(indexOfVaccine);
-
             if (indexOfVaccine > -1) {
                 await inventoryItems.splice(indexOfVaccine, 1);
-                console.log(inventoryItems[indexOfVaccine]);
             }
         }
 

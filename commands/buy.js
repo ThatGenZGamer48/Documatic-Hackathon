@@ -92,9 +92,26 @@ module.exports = {
                     }
                 );
 
+                const boughtItem = ingredients[item]["name"];
+                const boughtForCoins = ingredients[item]["coins"];
+
+                const embed = new MessageEmbed()
+                    .setTitle("Bought an Item")
+                    .setDescription(`You bought the item ${boughtItem} for ${boughtForCoins} coins`)
+                    .setColor("BLUE")
+                    .setAuthor({
+                        name: interaction.user.tag,
+                        iconURL: interaction.user.avatarURL({ dynamic: true }),
+                    })
+                    .setFooter({
+                        text: interaction.client.user.tag,
+                        iconURL: interaction.client.user.avatarURL(),
+                    })
+                    .setTimestamp();
+
                 // Send the reply.
                 await interaction.editReply({
-                    content: `You bought the item ${ingredients[item]["name"]} for ${ingredients[item]["coins"]} coins`,
+                    embeds: [embed]
                 });
                 return;
             }

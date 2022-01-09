@@ -8,6 +8,24 @@ module.exports = {
         .setName("help")
         .setDescription("The help command."),
     async execute(interaction) {
+        // Function to return command map
+        const returnCommandMap = (commandObject) => {
+            let commandString = `----------\n \`${commandObject.data.name}\` - ${commandObject.data.description}`;
+
+            let commandDataOptions = commandObject.data.options;
+
+            if (commandDataOptions.length != 0) {
+                commandString += '\n\nParameters:';
+                for (commandDataOption of commandDataOptions) {
+                    const optionName = commandDataOption.name;
+                    const optionDescription = commandDataOption.description;
+                    commandString += `\n​​​​\`${optionName}\` - ${optionDescription}`;                    
+                }
+            }
+
+            return commandString;
+        }
+
         // Create the embed for sending the help command to the user.
         const embed = new MessageEmbed()
             .setTitle("Help")
@@ -16,9 +34,9 @@ module.exports = {
                 interaction.client.commands
                     .map(
                         (cmd) =>
-                            `\`${cmd.data.name}\` - ${cmd.data.description}`
+                            returnCommandMap(cmd)
                     )
-                    .join("\n")
+                    .join("\n\n")
             )
             .setColor("BLUE")
             .setAuthor({

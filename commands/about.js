@@ -12,7 +12,7 @@ module.exports = {
         const embed = new MessageEmbed()
             .setTitle("About the bot")
             .setDescription(
-                "This bot was made for the hackathon hosted by the Documatic team. It focuses on a minigame regarding the development of COVID-19 vaccines."
+                "This bot was made for the hackathon hosted by the Documatic team. It focuses on a minigame regarding the development and researching of vaccines."
             )
             .setColor("BLUE")
             .setAuthor({

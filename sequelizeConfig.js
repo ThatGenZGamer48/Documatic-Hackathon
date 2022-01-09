@@ -1,11 +1,10 @@
+const { Sequelize } = require("sequelize");
 const { config } = require("dotenv");
 
 config();
 
-const { Sequelize } = require("sequelize");
-
 const sequelize = new Sequelize(
-    `postgres://postgres:${process.env.POSTGRES_PASSWORD}@localhost:5432/DocumaticTest`
+    `postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST_NAME}:${process.env.POSTGRES_HOST_PORT}/${process.env.POSTGRES_DATABASE_NAME}`
 );
 
 module.exports = sequelize;

@@ -13,7 +13,7 @@ module.exports = {
         )
         .addStringOption((option) =>
             option
-                .setName("vaccine")
+                .setName("vaccineid")
                 .setDescription("The vaccine to craft")
                 .setRequired(true)
         ),
@@ -33,7 +33,7 @@ module.exports = {
         }
 
         // Get the vaccine to craft.
-        const vaccine = interaction.options.getString("vaccine");
+        const vaccine = interaction.options.getString("vaccineid");
 
         // Get the inventory items of the user.
         const inventoryItems = userDetail["inventoryItems"];
@@ -51,8 +51,6 @@ module.exports = {
 
             listOfVaccineIds.push(value["id"]);
         }
-
-        console.log(listOfVaccineIds);
 
         // Check if the vaccine is valid.
         if (!listOfVaccineIds.includes(vaccine)) {
@@ -126,6 +124,7 @@ module.exports = {
                         BigInt(coins) +
                         BigInt(vaccineItemValue["given_coins_when_crafted"]);
 
+                    // Update the user details.
                     await UserDetails.update(
                         {
                             coins: updatedCoins,
@@ -138,9 +137,39 @@ module.exports = {
                         }
                     );
 
+                    // Get the coins given when crafted.
+                    const coinsGivenWhenCrafted = vaccineItemValue["given_coins_when_crafted"];
+                    // Add a vaccine image link to the embed for aesthetic purposes.
+                    let vaccineImageLink = "";
+
+                    if (vaccineName == "Coronavirus Vaccine") {
+                        vaccineImageLink = 'https://i.ibb.co/bPPCtM5/Coronavirus-Vaccine.jpg';
+                    } else if (vaccineName == "Smallpox Vaccine") {
+                        vaccineImageLink = 'https://i.ibb.co/4VwF4BR/Smallpox-Vaccine.jpg';
+                    } else if (vaccineName == "Influenza Vaccine") {
+                        vaccineImageLink = 'https://i.ibb.co/4VwF4BR/Smallpox-Vaccine.jpg';
+                    } else {
+                        vaccineImageLink = 'https://i.ibb.co/bPPCtM5/Coronavirus-Vaccine.jpg';
+                    }
+
+                    const embed = new MessageEmbed()
+                        .setTitle("Crafted an Item")
+                        .setDescription(`You crafted the vaccine ${vaccineName} and got ${coinsGivenWhenCrafted}!`)
+                        .setColor("BLUE")
+                        .setAuthor({
+                            name: interaction.user.tag,
+                            iconURL: interaction.user.avatarURL({ dynamic: true }),
+                        })
+                        .setImage(vaccineImageLink)
+                        .setFooter({
+                            text: interaction.client.user.tag,
+                            iconURL: interaction.client.user.avatarURL(),
+                        })
+                        .setTimestamp();
+
                     // Send the reply.
                     await interaction.editReply({
-                        content: `You crafted the vaccine ${vaccineName} and got ${vaccineItemValue["given_coins_when_crafted"]}!`,
+                        embeds: [embed],
                     });
                 }
             }

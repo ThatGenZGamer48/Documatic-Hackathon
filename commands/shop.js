@@ -28,7 +28,9 @@ module.exports = {
         // List the items in the shop.
         for (const key in data["shop"]["ingredients"]) {
             const value = data["shop"]["ingredients"][key];
-            embed.description += `**${value["id"]}**. ${item} - ${value["coins"]} coins\n`;
+            const coinsValue = value["coins"];
+            const idValue = value["id"];
+            embed.description += `**${idValue}**. ${key} - ${coinsValue} coins - ID: ${idValue}\n`;
         }
 
         // Send the embed.

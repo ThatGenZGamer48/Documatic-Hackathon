@@ -11,13 +11,14 @@ const UserDetails = sequelize.define(
         },
         inventoryItems: {
             type: DataTypes.ARRAY(DataTypes.STRING),
-            allowNull: false,
         },
         coins: {
             type: DataTypes.BIGINT,
         },
         latestRedeemedTime: {
             type: DataTypes.DATE,
+            allowNull: true,
+            primaryKey: false,
         },
     },
     { freezeTableName: true }
