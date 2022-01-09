@@ -8,7 +8,6 @@ module.exports = {
         .setName("about")
         .setDescription("About the bot."),
     async execute(interaction) {
-
         // Create the embed for sending about the bot.
         const embed = new MessageEmbed()
             .setTitle("About the bot")

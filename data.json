@@ -38,38 +38,25 @@
             "name": "Smallpox Vaccine",
             "id": "1",
             "virus": "Variola",
-            "ingredients": [
-                "Smallium",
-                "Poxium"
-            ],
+            "ingredients": ["Smallium", "Poxium"],
             "given_coins_when_crafted": 1000
         },
         "Influenza Vaccine": {
             "name": "Influenza Vaccine",
             "id": "2",
             "virus": "Influenza",
-            "ingredients": [
-                "Fluzium",
-                "Enzium"
-            ],
+            "ingredients": ["Fluzium", "Enzium"],
             "given_coins_when_crafted": 1500
         },
         "Coronavirus Vaccine": {
             "name": "Coronavirus Vaccine",
             "id": "3",
             "virus": "SARS-CoV-2",
-            "ingredients": [
-                "Corium",
-                "Vidium"
-            ],
+            "ingredients": ["Corium", "Vidium"],
             "given_coins_when_crafted": 2000
         }
     },
-    "list_of_viruses": [
-        "Variola",
-        "Influenza",
-        "SARS-CoV-2"
-    ],
+    "list_of_viruses": ["Variola", "Influenza", "SARS-CoV-2"],
     "virus_of_vaccine": {
         "Coronavirus Vaccine": "SARS-CoV-2",
         "Smallpox Vaccine": "Variola",

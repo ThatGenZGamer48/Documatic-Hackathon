@@ -1,6 +1,6 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
-const UserDetails = require('../models/userDetails');
+const { SlashCommandBuilder } = require("@discordjs/builders");
+const { MessageEmbed } = require("discord.js");
+const UserDetails = require("../models/userDetails");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -19,12 +19,15 @@ module.exports = {
         userInventoryItems.push("Influenza Vaccine"); */
         userInventoryItems.push("Coronavirus Vaccine");
 
-        await UserDetails.update({
-            inventoryItems: userInventoryItems,
-        }, {
-            where: {
-                userId: interaction.user.id
+        await UserDetails.update(
+            {
+                inventoryItems: userInventoryItems,
+            },
+            {
+                where: {
+                    userId: interaction.user.id,
+                },
             }
-        });
-    }
-}
+        );
+    },
+};

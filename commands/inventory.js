@@ -17,7 +17,10 @@ module.exports = {
 
         if (!userInventory) {
             // Send this if the user does not exist in the database. (Hasn't started a project.)
-            await interaction.editReply({ content: "You have to first start a project using the /project start command!" });
+            await interaction.editReply({
+                content:
+                    "You have to first start a project using the /project start command!",
+            });
         } else {
             inventoryItems = userInventory["inventoryItems"];
             let refinedInventoryItems = [];

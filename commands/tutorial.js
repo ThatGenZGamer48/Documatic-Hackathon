@@ -1,11 +1,14 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
 
+// Tutorial command.
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("tutorial")
         .setDescription("The tutorial on how you can play the game!"),
     async execute(interaction) {
+        // Make an embed to send the tutorial.
         const embed = new MessageEmbed()
             .setTitle("Tutorial")
             .setDescription(
@@ -22,6 +25,7 @@ module.exports = {
             })
             .setTimestamp();
 
+        // Send the embed.
         await interaction.reply({ embeds: [embed] });
     },
 };

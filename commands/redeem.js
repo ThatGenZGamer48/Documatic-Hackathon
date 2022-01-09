@@ -18,10 +18,14 @@ module.exports = {
 
         if (!interactionUserDetails) {
             // Send this if the user does not exist in the database. (Hasn't started a project.)
-            await interaction.editReply({ content: "You have to first start a project using the /project start command!" });
+            await interaction.editReply({
+                content:
+                    "You have to first start a project using the /project start command!",
+            });
         } else {
             // Get the latest redeemed time
-            const latestRedeemedTime = interactionUserDetails["latestRedeemedTime"];
+            const latestRedeemedTime =
+                interactionUserDetails["latestRedeemedTime"];
 
             // Get the current time.
             const currentUTCDate = new Date();
@@ -33,9 +37,11 @@ module.exports = {
                 return Math.abs(Math.round(timeDifference));
             };
 
-
             // Get the time difference (in minutes) using the function.
-            const timeBetween = getTimeDifference(currentUTCDate, latestRedeemedTime);
+            const timeBetween = getTimeDifference(
+                currentUTCDate,
+                latestRedeemedTime
+            );
 
             const getRandomCoins = () => {
                 return Math.floor(Math.random() * (1000 - 100) + 100);
@@ -69,7 +75,6 @@ module.exports = {
                         "You cannot redeem now. It has not yet been 20 minutes since you redeemed last.",
                 });
             }
-
         }
     },
 };

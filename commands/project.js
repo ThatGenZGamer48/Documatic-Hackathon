@@ -19,7 +19,6 @@ module.exports = {
         const subcommand = interaction.options.getSubcommand();
 
         if (subcommand == "start") {
-
             // Defer reply as it will take some time to communicate to the database.
             await interaction.deferReply();
 
@@ -43,12 +42,12 @@ module.exports = {
                 currentUTCDate.getUTCHours(),
                 currentUTCDate.getUTCMinutes() - 21,
                 currentUTCDate.getUTCSeconds()
-            )
+            );
 
             const finalUTCDate = new Date(twentyMinutesBefore);
 
             if (foundResult == null) {
-                // If the user is null, then create a new user. 
+                // If the user is null, then create a new user.
                 const createdUser = await UserDetails.create({
                     userId: interaction.user.id,
                     inventoryItems: ["Default"],
@@ -110,9 +109,10 @@ module.exports = {
                 }
 
                 for (const virusOfVaccine in data["virus_of_vaccine"]) {
-                    const theVirusOfVaccine = data["virus_of_vaccine"][virusOfVaccine];
+                    const theVirusOfVaccine =
+                        data["virus_of_vaccine"][virusOfVaccine];
                     const vaccineItself = virusOfVaccine;
-    
+
                     if (foundResult["inventoryItems"].includes(vaccineItself)) {
                         const indexOfVirus = viruses.indexOf(theVirusOfVaccine);
 
@@ -124,7 +124,8 @@ module.exports = {
 
                 if (viruses.length == 0) {
                     await interaction.editReply({
-                        content: "You already have all the three vaccines! Please use the /gettoken command to get your \"Vaccine Crafter Token\""
+                        content:
+                            'You already have all the three vaccines! Please use the /gettoken command to get your "Vaccine Researcher Token"',
                     });
                     return;
                 }

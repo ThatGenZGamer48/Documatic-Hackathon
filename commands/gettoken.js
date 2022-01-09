@@ -3,6 +3,8 @@ const { MessageEmbed } = require("discord.js");
 const UserDetails = require("../models/UserDetails");
 const data = require("../data.json");
 
+// Gettoken command.
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("gettoken")
@@ -10,18 +12,24 @@ module.exports = {
             "Gets a token for you, if you have all the three vaccines!"
         ),
     async execute(interaction) {
+        // Defer the reply as it may take a while to communicate to the database.
         await interaction.deferReply();
 
+        // Get the user's details.
         const userDetail = await UserDetails.findByPk(interaction.user.id);
 
+        // Check if the user has not started the game yet.
         if (!userDetail) {
-            return interaction.editReply({ content: "You haven't started a project yet! Use the /project start command to start a project!" });
+            return interaction.editReply({
+                content:
+                    "You haven't started a project yet! Use the /project start command to start a project!",
+            });
         }
 
+        // Get the inventory items of the user.
         const inventoryItems = userDetail["inventoryItems"];
 
-        console.log(inventoryItems);
-
+        // Check if the user has all the three vaccines.
         if (
             (!inventoryItems.includes("Smallpox Vaccine") &&
                 !inventoryItems.includes("Influenza Vaccine")) ||
@@ -32,7 +40,8 @@ module.exports = {
             });
             return;
         }
-        
+
+        // Remove the three vaccines from the user's inventory.
         for (vaccine in data["vaccine_data"]) {
             const value = data["vaccine_data"][vaccine];
 
@@ -46,18 +55,22 @@ module.exports = {
             }
         }
 
-        await inventoryItems.push("Vaccine Crafter Token");
+        // Add the token to the user's inventory.
+        await inventoryItems.push("Vaccine Researcher Token");
 
-        console.log(inventoryItems);
-
-        await UserDetails.update({
-            inventoryItems: inventoryItems,
-        }, {
-            where: {
-                userId: interaction.user.id,
+        // Update the user's inventory.
+        await UserDetails.update(
+            {
+                inventoryItems: inventoryItems,
+            },
+            {
+                where: {
+                    userId: interaction.user.id,
+                },
             }
-        });
+        );
 
+        // Send the reply.
         const embed = new MessageEmbed()
             .setTitle("You have been given a token!")
             .setDescription(
