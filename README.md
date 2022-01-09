@@ -4,11 +4,17 @@ The repository for working on the Hackathon hosted by the Documatic team.
 
 # Directions of Use
 
-- First open pgAdmin 4 and create a new database named DocumaticTest.
-- Then create a table named UserDetails with columns of userId: text, inventoryItems: text[], coins: bigint, latestRedeemedTime: time with timezone, createdAt: date, updatedAt: date.
-- Then create a table named UserDetails with columns of userId: text, inventoryItems: text[], coins: bigint, latestRedeemedTime: timestamp without timezone, createdAt: date, updatedAt: date.
-- Then you can change the sequelizeConfig.js to include your credentials.
-- Run the bot and you are good to go!
+- Open pgAdmin 4 and create a new table in your database named `UserDetails`. Then create 6 tables with the corresponding names and datatypes.
+
+Name:                 Datatype:
+userId                text
+inventoryItems        text\[]
+coins                 bigint
+latestRedeemedTime    timestamp without time zone
+createdAt             date
+updatedAt             date
+
+Note: The SQL standard requires that writing just timestamp be equivalent to timestamp without time zone, and PostgreSQL honors that behavior.
 
 ## Objective of the game
 
