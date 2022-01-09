@@ -97,7 +97,9 @@ module.exports = {
 
                 const embed = new MessageEmbed()
                     .setTitle("Bought an Item")
-                    .setDescription(`You bought the item ${boughtItem} for ${boughtForCoins} coins`)
+                    .setDescription(
+                        `You bought the item ${boughtItem} for ${boughtForCoins} coins`
+                    )
                     .setColor("BLUE")
                     .setAuthor({
                         name: interaction.user.tag,
@@ -111,7 +113,7 @@ module.exports = {
 
                 // Send the reply.
                 await interaction.editReply({
-                    embeds: [embed]
+                    embeds: [embed],
                 });
                 return;
             }

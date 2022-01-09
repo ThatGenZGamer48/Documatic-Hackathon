@@ -31,8 +31,8 @@ module.exports = {
 
         // Check if the user has all the three vaccines.
         if (
-            (!inventoryItems.includes("Smallpox Vaccine") &&
-                !inventoryItems.includes("Influenza Vaccine")) &&
+            !inventoryItems.includes("Smallpox Vaccine") &&
+            !inventoryItems.includes("Influenza Vaccine") &&
             !inventoryItems.includes("Coronavirus Vaccine")
         ) {
             await interaction.editReply({

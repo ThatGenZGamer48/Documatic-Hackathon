@@ -15,16 +15,16 @@ module.exports = {
             let commandDataOptions = commandObject.data.options;
 
             if (commandDataOptions.length != 0) {
-                commandString += '\n\nParameters:';
+                commandString += "\n\nParameters:";
                 for (commandDataOption of commandDataOptions) {
                     const optionName = commandDataOption.name;
                     const optionDescription = commandDataOption.description;
-                    commandString += `\n​​​​\`${optionName}\` - ${optionDescription}`;                    
+                    commandString += `\n​​​​\`${optionName}\` - ${optionDescription}`;
                 }
             }
 
             return commandString;
-        }
+        };
 
         // Create the embed for sending the help command to the user.
         const embed = new MessageEmbed()
@@ -32,10 +32,7 @@ module.exports = {
             .setDescription(
                 // Map all the commands with the command name and the description.
                 interaction.client.commands
-                    .map(
-                        (cmd) =>
-                            returnCommandMap(cmd)
-                    )
+                    .map((cmd) => returnCommandMap(cmd))
                     .join("\n\n")
             )
             .setColor("BLUE")
