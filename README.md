@@ -4,7 +4,7 @@ The repository for working on the Hackathon hosted by the Documatic team.
 
 # Directions of Use
 
-- Change `.env.example` to `.env` and change the variables name according to your Bot & PostgreSQL details.
+- Change the name of the file `.env.example` to `.env` and change the variables name according to your Bot & PostgreSQL details.
 - Open pgAdmin 4 and create a new table in the database inputted in the `.env` file (Table Name: `UserDetails`). Then create 6 columns with the corresponding names and datatypes.
 It has been written in the format `name: datatype`
 
