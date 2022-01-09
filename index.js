@@ -44,6 +44,14 @@ const client = new Client({
     allowedMentions: { parse: ["users", "roles"], repliedUser: false },
 });
 
+client.pool = new pg.Pool({
+    user: process.env.POSTGRES_USER,
+    host: process.env.POSTGRES_HOST,
+    database: process.env.POSTGRES_DATABASE,
+    password: process.env.POSTGRES_PASSWORD,
+    port: 5432,
+});
+
 // Registering the slash commands.
 client.commands = new Collection();
 
@@ -70,6 +78,11 @@ rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
 // Events.
 client.on("ready", () => {
     console.log("Bot is ready!");
+
+    client.pool.query("CREATE TABLE IF NOT EXISTS \"UserDetails\"(\"userId\" text NOT NULL PRIMARY KEY, \"inventoryItems\" text[], \"coins\" bigint, \"latestRedeemedTime\" timestamp, \"createdAt\" time, \"updatedAt\" time)", (err, res) => {
+        console.log(err, res);
+        client.pool.end();
+    });
 });
 
 // Interaction create event.
