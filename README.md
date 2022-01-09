@@ -15,9 +15,9 @@ latestRedeemedTime: timestamp without time zone<br>
 createdAt: date<br>
 updatedAt: date<br>
 
-- You're good to go!
-
 Note: The SQL standard requires that writing just timestamp be equivalent to timestamp without time zone, and PostgreSQL honors that behavior.
+
+- You're good to go!
 
 ## Objective of the game
 
