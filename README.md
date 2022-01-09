@@ -10,7 +10,7 @@ It has been written in the format `name: datatype`
 
 ```
 userId: text
-inventoryItems: text\[]
+inventoryItems: text[]
 coins: bigint
 latestRedeemedTime: timestamp without time zone
 createdAt: date
