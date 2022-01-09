@@ -4,7 +4,8 @@ The repository for working on the Hackathon hosted by the Documatic team.
 
 # Directions of Use
 
-- Open pgAdmin 4 and create a new table in your database named `UserDetails`. Then create 6 tables with the corresponding names and datatypes.
+- Change `.env.example` to `.env` and change the variables name according to your Bot & PostgreSQL details.
+- Open pgAdmin 4 and create a new table in the database inputted in the `.env` file (Table Name: `UserDetails`). Then create 6 columns with the corresponding names and datatypes.
 It has been written in the format `name: datatype`
 
 userId: text<br>
@@ -13,6 +14,8 @@ coins: bigint<br>
 latestRedeemedTime: timestamp without time zone<br>
 createdAt: date<br>
 updatedAt: date<br>
+
+- You're good to go!
 
 Note: The SQL standard requires that writing just timestamp be equivalent to timestamp without time zone, and PostgreSQL honors that behavior.
 
